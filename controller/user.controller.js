@@ -7,13 +7,24 @@ async function userSignin(request, response) {
 
     //validaton using zod
     const { data, error } = signupUserSchema.safeParse(request.body)
-    if (error) { return response.status(400).json({ message: error.errors.map((errors) => errors.message) }) };
+    if (error) { return response.status(400).json({ message: error.errors.map((errors) => `${errors.message}`) }) };
 
     const hashPassword = await createHashPassword(data.password); //password hashing using
-    await userModel.create({
+    const user = await userModel.create({
         userName: data.useName,
         password: hashPassword
     })
+
+    if (user) {
+        const token = genarateUserToken(user)
+        response.setHeader('Authorizaiton', `Bearer ${token}`)
+        return response.status(200).json({
+            user: user.toJSON(),
+            message: 'user created successfully..'
+        })
+    }else{
+        return reresponse
+    }
 }
 
 async function userLogin(request, response) {
