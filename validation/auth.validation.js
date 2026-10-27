@@ -5,4 +5,8 @@ const signupUserSchema = z.object({
     password: z.string().trim().min(4, { message: 'enter minimum 4 number' }).max(10, { message: 'enter maximum 10 number' })
 })
 
-export { signupUserSchema }
+const createWorkspaceValidatation = z.object({
+    name: z.string().trim().max(1000, { message: 'create under 1000 characters workspace ' })
+})
+
+export { signupUserSchema, createWorkspaceValidatation }
