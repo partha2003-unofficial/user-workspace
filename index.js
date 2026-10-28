@@ -5,6 +5,7 @@ import { conneciton_mongodb } from './connection.mongodb.js';
 import userRouter from './routes/user.route.js';
 import workspace_router from './routes/workspace.route.js';
 import { auth_user } from './middleware/auth.middleware.js';
+import taskRouter from './routes/tasks.route.js';
 
 const application = express();
 
@@ -15,5 +16,6 @@ application.use(express.json());
 
 application.use('/api/v1/user', userRouter)
 application.use('/api/v1/workspace', auth_user, workspace_router)
+application.use('/api/v1/tasks', auth_user, taskRouter)
 
 application.listen(process.env.PORT, () => console.log('server is running..'))

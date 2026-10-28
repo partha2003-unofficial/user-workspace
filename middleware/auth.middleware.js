@@ -13,6 +13,7 @@ async function auth_user(request, response, next) {
             request.user = userValidation;
             return next();
         } else {
+            console.log('unauthorized user !')
             return response.status(400).json({ message: 'user is not valid!' })
         }
 

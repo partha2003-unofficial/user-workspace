@@ -21,11 +21,11 @@ async function createWorkspace(request, response) {
 }
 
 async function listWorkspace(request, response) {
-    const user = await workSpaceModel.find({ userId: request.user._id })
-    if (!user) {
+    const workspace = await workSpaceModel.find({ userId: request.user._id })
+    if (!workspace) {
         return response.status(404).json({ message: 'user is not found!' });
     }
-    const workspaceList = user.map(value => value.name)
+    const workspaceList = workspace.map(value => value.name)
     return response.status(200).json({ message: 'user is founded..', workspaces: workspaceList })
 }
 
